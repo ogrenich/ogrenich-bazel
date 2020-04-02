@@ -1,0 +1,12 @@
+{
+  "configDefaults" : {
+    "optionSet" : {
+
+    }
+  },
+  "packages" : [
+    "Bazel"
+  ],
+  "projectName" : "Bazel",
+  "workspaceRoot" : ".."
+}

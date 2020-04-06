@@ -90,7 +90,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 # Bazel
-bazel-*/
+bazel-*
 
 # Tulsi
 *.xcodeproj

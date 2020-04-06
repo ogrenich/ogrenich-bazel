@@ -91,3 +91,6 @@ iOSInjectionProject/
 
 # Bazel
 bazel-*/
+
+# Tulsi
+*.xcodeproj

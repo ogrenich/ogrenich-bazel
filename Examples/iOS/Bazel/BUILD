@@ -8,11 +8,6 @@ load(
     "ios_application",
 )
 
-load(
-    "@bazel_skylib//rules:build_test.bzl",
-    "build_test",
-)
-
 swift_library(
     name = "Sources",
     srcs = [

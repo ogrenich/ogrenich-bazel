@@ -35,7 +35,7 @@ bazel build //Bazel:*
 
 ###### 7. Build with Bazel completed successfully! :tada:
 
-###### 8. Install Tulsi – Xcode Project Generator For Bazel: <https://github.com/bazelbuild/tulsi#building-and-installing>.
+###### 8. Install Tulsi `0.20200219.88` – Xcode Project Generator For Bazel: <https://github.com/bazelbuild/tulsi#building-and-installing>.
 
 ###### 9. Remove `*.xcodeproj`.
 

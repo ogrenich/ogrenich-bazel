@@ -19,6 +19,9 @@ swift_library(
         "Base.lproj/Main.storyboard",
     ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//:Kingfisher",
+    ]
 )
 
 ios_application(
@@ -33,5 +36,7 @@ ios_application(
     launch_storyboard = "Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = "13.0",
     visibility = ["//visibility:public"],
-    deps = [":Sources"],
+    deps = [
+        ":Sources",
+    ],
 )

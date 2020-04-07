@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ViewController: UIViewController {
 
@@ -17,4 +18,3 @@ class ViewController: UIViewController {
 
 
 }
-

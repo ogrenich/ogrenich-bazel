@@ -21,7 +21,7 @@ swift_library(
     visibility = ["//visibility:public"],
     deps = [
         "//:Kingfisher",
-    ]
+    ],
 )
 
 ios_application(

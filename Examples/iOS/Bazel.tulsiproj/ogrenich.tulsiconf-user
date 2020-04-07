@@ -4,7 +4,7 @@
       "p" : "/usr/local/bin/bazel"
     },
     "WorkspaceRootPath" : {
-      "p" : "/Users/ogrenich/Developer/ogrenich/ogrenich-bazel/Examples/iOS/Bazel"
+      "p" : "/Users/ogrenich/Developer/ogrenich/ogrenich-bazel/Examples/iOS"
     }
   }
 }

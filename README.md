@@ -15,9 +15,17 @@ ln -s /user/local/Cellar/bazelisk/1.3.0/bin/bazelisk /user/local/bin/bazel
 
 ###### 1. Create a new Xcode project. iOS Single View App (Swift, Storyboards, Include Unit and UI Tests).
 
+###### [Optional] (Carthage) Create a new `Cartfile` file with dependencies and run:
+
+```bash
+carthage update
+```
+
 ###### 2. Create a new `WORKSPACE` file with base dependencies.
 
 ###### 3. Create a new `BUILD` file for the main target.
+
+###### [Optional] (Carthage) Create an additional `BUILD` file in the root directory of the iOS project with imports of dynamic frameworks.
 
 ###### 4. Update some env values in your main target's `Info.plist` file:
 ```
@@ -41,11 +49,11 @@ bazel build //Bazel:*
 
 ###### 10. Create a new `*` project with Tulsi.
 
-###### 11. Add a `BUILD` file as a package in Tulsi project.
+###### 11. Add a `*/BUILD` file as a package in the Tulsi's project.
 
 ###### 12. Create a new `*.tulsiproj` and save it on the same level with `WORKSPACE` file. You have to include `*` - `ios_application` and `Sources` – `swift_library`.
 
-###### 13. Add `*` and `external` Source Targets with a Recursive strategy and Save a new Config with `Default` name.
+###### 13. Add `*` Source Target with a Recursive strategy and Save new Config with the `Default` name.
 
 ###### 14. Generate a new Xcode Project with Tulsi and save it on the same level with `WORKSPACE` and `*.tulsiproj` files.
 

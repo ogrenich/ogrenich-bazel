@@ -3,11 +3,11 @@
 
 ## Prepare Environment
 
-###### Install [Bazelisk](https://github.com/bazelbuild/bazeliskhttps://github.com/bazelbuild/bazelisk) `1.3.0` as Bazel through [Homebrew](https://brew.sh):
+###### Install [Bazelisk](https://github.com/bazelbuild/bazeliskhttps://github.com/bazelbuild/bazelisk) `1.4.0` as Bazel through [Homebrew](https://brew.sh):
 
 ```bash
-brew install bazelisk@1.3.0
-ln -s /user/local/Cellar/bazelisk/1.3.0/bin/bazelisk /user/local/bin/bazel
+brew install bazelisk@1.4.0
+ln -s /user/local/Cellar/bazelisk/1.4.0/bin/bazelisk /user/local/bin/bazel
 ```
 
 
@@ -18,7 +18,7 @@ ln -s /user/local/Cellar/bazelisk/1.3.0/bin/bazelisk /user/local/bin/bazel
 ###### [Optional] (Carthage) Create a new `Cartfile` file with dependencies and run:
 
 ```bash
-carthage update
+carthage bootstrap --platform iOS
 ```
 
 ###### 2. Create a new `WORKSPACE` file with base dependencies.
@@ -33,27 +33,27 @@ CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE) -> APPL
 UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate -> *_Sources.SceneDelegate
 ```
 
-###### 5. Add a new `.bazelversion` and specify exact version of Bazel in it.
+###### 5. Add a new `.bazelversion` and specify exact version of Bazel in it. Additionally add a new `.bazelrc` with predefined build flags for iOS.
 
 ###### 6. Build project with Bazel:
 
 ```bash
-bazel build //Bazel:*
+bazel build //Bazel:* --apple_platform_type=ios --cpu=ios_x86_64
 ```
 
-###### 7. Build with Bazel completed successfully! :tada:
+###### 7. Build iOS App with Bazel completed successfully! :tada:
 
 ###### 8. Install Tulsi `0.20200219.88` – Xcode Project Generator For Bazel: <https://github.com/bazelbuild/tulsi#building-and-installing>.
 
 ###### 9. Remove `*.xcodeproj`.
 
-###### 10. Create a new `*` project with Tulsi.
+###### 10. Create a new `*.tulsiproj` and save it on the same level with `WORKSPACE` file.
 
-###### 11. Add a `*/BUILD` file as a package in the Tulsi's project.
+###### 11. Add `*/BUILD` file associated with the project as a Package to the created Tulsi's project. Repeat this step if you have more than one `BUILD` file containing targets you wish to build directly.
 
-###### 12. Create a new `*.tulsiproj` and save it on the same level with `WORKSPACE` file. You have to include `*` - `ios_application` and `Sources` – `swift_library`.
+###### 12. Next, you have to select one or more targets that you want to build in Xcode, for example `*` - `ios_application` and `Sources` – `swift_library`.
 
-###### 13. Add `*` Source Target with a Recursive strategy and Save new Config with the `Default` name.
+###### 13. Select one or more `Source Targets` with a Recursive strategy (Optional). This allows you to select a working set from your full source tree that best matches the portion of the project that you're likely to edit. Save a new Config with the `Default` name.
 
 ###### 14. Generate a new Xcode Project with Tulsi and save it on the same level with `WORKSPACE` and `*.tulsiproj` files.
 

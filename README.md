@@ -38,7 +38,7 @@ UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate -> *_Sources.Scen
 ###### 6. Build project with Bazel:
 
 ```bash
-bazel build //*:* --apple_platform_type=ios --cpu=ios_x86_64
+bazel build //*:* --spawn_strategy=local --apple_platform_type=ios --cpu=ios_x86_64
 ```
 
 ###### 7. Build iOS App with Bazel completed successfully! :tada:
@@ -63,12 +63,12 @@ bazel build //*:* --apple_platform_type=ios --cpu=ios_x86_64
 
 ### iOS Build Benchmarks :construction_worker:
 
-###### 1. Clean Xcode Build.
-###### Build time: ``
+###### 1. Cold Build iOS App (Carthage) with Xcode.
+###### Build time: `11.592s`
 
 
-###### 2. Clean Bazel Build, Without Remote Cache.
-###### Elapsed time: `81.784s`
+###### 2. Cold Build with Bazel without Remote Cache.
+###### Elapsed time: `71.736s`
 
 ```bash
 iOS$: bazel clean && bazel build //*:*
@@ -79,19 +79,18 @@ INFO: From Processing and signing Bazel:
 bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 81.784s, Critical Path: 31.51s
-INFO: 217 processes: 209 darwin-sandbox, 7 local, 1 worker.
+INFO: Elapsed time: 71.736s, Critical Path: 25.28s
+INFO: 217 processes: 217 local.
 INFO: Build completed successfully, 245 total actions
 ```
 
-###### 3. Clean Bazel Build + Upload Actions and Outputs to Remote Cache.
-###### Elapsed time: `103.885s`
+###### 3. Cold Build with Bazel + Upload Actions and Outputs to Remote Cache.
+###### Elapsed time: `86.610s`
 
 ```bash
 iOS$: bazel clean && bazel build //*:* --remote_cache=grpcs://* --remote_header="authorization=:key:"
-Starting local Bazel server and connecting to it...
 INFO: Starting clean.
-INFO: Invocation ID: eca27bad-d7ef-4f6f-9e4b-9046d025e409
+INFO: Invocation ID: *
 INFO: Analyzed target //Bazel:Bazel (41 packages loaded, 873 targets configured).
 INFO: Found 1 target...
 INFO: Deleting stale sandbox base /private/var/tmp/_bazel_ogrenich/9f59e9f84bd18008bcc3b7847193ed95/sandbox
@@ -99,27 +98,27 @@ INFO: From Processing and signing Bazel:
 bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 103.885s, Critical Path: 42.74s
-INFO: 217 processes: 209 darwin-sandbox, 7 local, 1 worker.
+INFO: Elapsed time: 86.610s, Critical Path: 34.90s
+INFO: 217 processes: 4 remote cache hit, 213 local.
 INFO: Build completed successfully, 245 total actions
 ```
 
-###### 4. Clean Build + Retrieve Actions and Outputs from Remote Cache.
-###### Elapsed time: `24.205s`
+###### 4. Cold Build with Bazel + Retrieve Actions and Outputs from Remote Cache.
+###### Elapsed time: `10.451s`
 
 ```bash
 iOS$: bazel clean && bazel build //*:* --remote_cache=grpcs://* --remote_header="authorization=:key:"
 INFO: Starting clean.
-INFO: Invocation ID: a25d976c-c055-45c6-88c4-b1fb80a2c17e
+INFO: Invocation ID: *
 INFO: Analyzed target //Bazel:Bazel (41 packages loaded, 873 targets configured).
 INFO: Found 1 target...
 INFO: From Processing and signing Bazel:
 bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 24.205s, Critical Path: 12.01s
+INFO: Elapsed time: 10.451s, Critical Path: 3.92s
 INFO: 217 processes: 216 remote cache hit, 1 local.
 INFO: Build completed successfully, 245 total actions
 ```
 
-#### Result: Build with Remote Cache `~x4 faster` :rocket:
+#### Result: Overall speedup Bazel with Remote Cache is `~x7 faster` :rocket:

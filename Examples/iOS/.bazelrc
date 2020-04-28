@@ -1,4 +1,5 @@
 build --verbose_failures
+build --spawn_strategy=local
 build --apple_platform_type=ios
 build --cpu=ios_x86_64
 build --xcode_version=11.4

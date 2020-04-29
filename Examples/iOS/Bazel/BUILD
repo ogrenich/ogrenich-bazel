@@ -1,3 +1,5 @@
+package(default_visibility = ["//visibility:public"])
+
 load(
     "@build_bazel_rules_swift//swift:swift.bzl",
     "swift_library",
@@ -18,7 +20,6 @@ swift_library(
     data = [
         "Base.lproj/Main.storyboard",
     ],
-    visibility = ["//visibility:public"],
     deps = [
         "//:Kingfisher",
     ],
@@ -35,7 +36,6 @@ ios_application(
     infoplists = ["Info.plist"],
     launch_storyboard = "Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = "13.0",
-    visibility = ["//visibility:public"],
     deps = [
         ":Sources",
     ],

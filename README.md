@@ -35,7 +35,19 @@ UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate -> *_Sources.Scen
 
 ###### 5. Add a new `.bazelversion` and specify exact version of Bazel in it. Additionally add a new `.bazelrc` with predefined build flags for iOS.
 
-###### 6. Build project with Bazel:
+###### 6.1. Fetch and Compile core Bazel’s dependencies:
+
+```bash
+bazel build @build_bazel_rules_swift//examples/xplatform/hello_world
+```
+
+###### 6.2. Fetch external Bazel’s dependencies:
+
+```bash
+bazel fetch //*:*
+```
+
+###### 6.3. Build project with Bazel:
 
 ```bash
 bazel build //*:* --spawn_strategy=local --apple_platform_type=ios --cpu=ios_x86_64
@@ -68,57 +80,50 @@ bazel build //*:* --spawn_strategy=local --apple_platform_type=ios --cpu=ios_x86
 
 
 ###### 2. Cold Build with Bazel without Remote Cache.
-###### Elapsed time: `71.736s`
+###### Elapsed time: `7.829s`
 
 ```bash
-iOS$: bazel clean && bazel build //*:*
-INFO: Starting clean.
-INFO: Analyzed target //Bazel:Bazel (41 packages loaded, 873 targets configured).
+INFO: Analyzed target //Bazel:Bazel (0 packages loaded, 196 targets configured).
 INFO: Found 1 target...
-INFO: From Processing and signing Bazel:
-bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
+INFO: From ImportedDynamicFrameworkProcessor Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework.zip:
+bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 71.736s, Critical Path: 25.28s
-INFO: 217 processes: 217 local.
-INFO: Build completed successfully, 245 total actions
+INFO: Elapsed time: 7.829s, Critical Path: 7.51s
+INFO: 15 processes: 15 local.
+INFO: Build completed successfully, 44 total actions
 ```
 
 ###### 3. Cold Build with Bazel + Upload Actions and Outputs to Remote Cache.
-###### Elapsed time: `86.610s`
+###### Elapsed time: `7.864s`
 
 ```bash
-iOS$: bazel clean && bazel build //*:* --remote_cache=grpcs://* --remote_header="authorization=:key:"
-INFO: Starting clean.
 INFO: Invocation ID: *
-INFO: Analyzed target //Bazel:Bazel (41 packages loaded, 873 targets configured).
+INFO: Analyzed target //Bazel:Bazel (0 packages loaded, 196 targets configured).
 INFO: Found 1 target...
-INFO: Deleting stale sandbox base /private/var/tmp/_bazel_ogrenich/9f59e9f84bd18008bcc3b7847193ed95/sandbox
-INFO: From Processing and signing Bazel:
-bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
+INFO: From ImportedDynamicFrameworkProcessor Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework.zip:
+bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 86.610s, Critical Path: 34.90s
-INFO: 217 processes: 4 remote cache hit, 213 local.
-INFO: Build completed successfully, 245 total actions
+INFO: Elapsed time: 7.864s, Critical Path: 7.11s
+INFO: 15 processes: 15 local.
+INFO: Build completed successfully, 44 total actions
 ```
 
 ###### 4. Cold Build with Bazel + Retrieve Actions and Outputs from Remote Cache.
-###### Elapsed time: `10.451s`
+###### Elapsed time: `1.614s`
 
 ```bash
-iOS$: bazel clean && bazel build //*:* --remote_cache=grpcs://* --remote_header="authorization=:key:"
-INFO: Starting clean.
 INFO: Invocation ID: *
-INFO: Analyzed target //Bazel:Bazel (41 packages loaded, 873 targets configured).
+INFO: Analyzed target //Bazel:Bazel (0 packages loaded, 196 targets configured).
 INFO: Found 1 target...
-INFO: From Processing and signing Bazel:
-bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel_archive-root/Payload/Bazel.app/Frameworks/Kingfisher.framework: replacing existing signature
+INFO: From ImportedDynamicFrameworkProcessor Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework.zip:
+bazel-out/ios_x86_64-fastbuild/bin/Bazel/Bazel-intermediates/_imported_frameworks/Kingfisher.framework: replacing existing signature
 Target //Bazel:Bazel up-to-date:
   bazel-bin/Bazel/Bazel.ipa
-INFO: Elapsed time: 10.451s, Critical Path: 3.92s
-INFO: 217 processes: 216 remote cache hit, 1 local.
-INFO: Build completed successfully, 245 total actions
+INFO: Elapsed time: 1.614s, Critical Path: 1.26s
+INFO: 15 processes: 14 remote cache hit, 1 local.
+INFO: Build completed successfully, 44 total actions
 ```
 
-#### Result: Overall speedup Bazel with Remote Cache is `~x7 faster` :rocket:
+#### Result: Bazel with Remote Cache a little bit faster than original Xcode build system. Overall speedup from local Bazel build to Remote Cache is `~x7 faster` :rocket:
